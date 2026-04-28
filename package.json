@@ -1,0 +1,10 @@
+{
+  "name": "ccms",
+  "private": true,
+  "scripts": {
+    "dev": "start cmd /c \"cd server && npm run dev\" && start cmd /c \"cd client && npm run dev\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "db:seed": "cd server && npx tsx prisma/seed.ts"
+  }
+}

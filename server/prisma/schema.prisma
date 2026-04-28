@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("CUSTOMER")
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  complaints    Complaint[]    @relation("Customer")
+  assignedTo    Complaint[]    @relation("AssignedAdmin")
+  emailTokens   EmailToken[]
+}
+
+model Category {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  complaints Complaint[]
+}
+
+model Complaint {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  status          String   @default("NEW")
+  priority        String   @default("MEDIUM")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  customerId      String
+  customer        User     @relation("Customer", fields: [customerId], references: [id])
+
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+
+  assignedAdminId String?
+  assignedAdmin   User?    @relation("AssignedAdmin", fields: [assignedAdminId], references: [id])
+}
+
+model EmailToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  type      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
