@@ -1,0 +1,15 @@
+name = "ccms-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ccms-db"
+database_id = "65a01f1f-e51b-41b9-9a06-18666735f2eb"
+
+[vars]
+JWT_SECRET = "ccms-jwt-secret-change-in-production"
+CLIENT_URL = "https://ccms.pages.dev"
+
+[env.production]
+vars = { JWT_SECRET = "REPLACE_WITH_STRONG_SECRET", CLIENT_URL = "https://ccms.pages.dev" }

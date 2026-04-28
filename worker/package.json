@@ -1,0 +1,20 @@
+{
+  "name": "ccms-worker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 execute ccms-db --local --file=./schema.sql",
+    "db:remote": "wrangler d1 execute ccms-db --remote --file=./schema.sql",
+    "seed": "wrangler d1 execute ccms-db --local --file=./seed.sql"
+  },
+  "dependencies": {
+    "hono": "^4.6.14",
+    "jose": "^5.9.6",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260426.1"
+  }
+}
